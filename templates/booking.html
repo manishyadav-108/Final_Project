@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-2xl mx-auto bg-gray-800 p-8 rounded-2xl border border-gray-700">
+    <h2 class="text-3xl font-bold mb-6 text-blue-400">Complete Your Booking</h2>
+    
+    <div class="bg-gray-900 p-6 rounded-xl mb-6 border border-gray-700">
+        <h3 class="text-xl font-bold">{{ item[1] }}</h3>
+        <p class="text-gray-400">Service: <span class="capitalize">{{ service_type }}</span></p>
+    </div>
+
+    <form action="/confirm-booking" method="POST" class="space-y-6">
+        <input type="hidden" name="service_type" value="{{ service_type }}">
+        <input type="hidden" name="item_id" value="{{ item[0] }}">
+
+        <div>
+            <label class="block text-gray-300 mb-2">
+                {% if service_type == 'driver-only' %} Duration (Hours) {% else %} Duration (Days) {% endif %}
+            </label>
+            <input type="number" name="duration" min="1" value="1" 
+                   class="w-full p-4 rounded-lg bg-gray-700 border border-gray-600 focus:border-blue-500 outline-none text-white text-xl">
+        </div>
+
+        <div class="p-4 bg-blue-900/30 rounded-lg border border-blue-800">
+            <p class="text-sm text-blue-300">Estimated Total will be calculated on the next step including base fees and taxes.</p>
+        </div>
+
+        <button type="submit" class="w-full bg-green-600 hover:bg-green-700 p-4 rounded-xl font-bold text-xl transition shadow-lg">
+            Confirm & Generate Booking OTP
+        </button>
+    </form>
+</div>
+{% endblock %}
