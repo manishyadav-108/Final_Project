@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-md mx-auto py-20">
+    <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 shadow-2xl">
+        <h2 class="text-3xl font-bold text-white mb-2">Login</h2>
+        <p class="text-gray-400 mb-6 text-sm">Access your DriveDirect account.</p>
+
+        <form action="/login" method="POST" class="space-y-4">
+            <div>
+                <label class="block text-sm text-gray-400 mb-1">Email Address</label>
+                <input type="email" name="email" required placeholder="admin@drivedirect.com" 
+                       class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white outline-none focus:border-blue-500">
+            </div>
+            <div>
+                <label class="block text-sm text-gray-400 mb-1">Password</label>
+                <input type="password" name="password" required placeholder="••••••••" 
+                       class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white outline-none focus:border-blue-500">
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 p-3 rounded-lg font-bold text-white transition mt-4">
+                Sign In
+            </button>
+        </form>
+        
+        <p class="text-center text-gray-500 text-xs mt-6">
+            Admin Demo: manishyadavsci@gmail.com // free
+        </p>
+    </div>
+</div>
+{% endblock %}

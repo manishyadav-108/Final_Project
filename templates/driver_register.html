@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-3xl mx-auto py-10">
+    <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 shadow-2xl">
+        <h2 class="text-3xl font-bold text-green-400 mb-2">Drive with DriveDirect</h2>
+        <p class="text-gray-400 mb-8">Fill in your professional details to start earning.</p>
+
+        <form action="/driver/register" method="POST" class="grid grid-cols-2 gap-6">
+            <div class="col-span-2 md:col-span-1">
+                <label class="block text-sm text-gray-400 mb-2">Full Name</label>
+                <input type="text" name="name" required class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white outline-none focus:border-green-500">
+            </div>
+            <div class="col-span-2 md:col-span-1">
+                <label class="block text-sm text-gray-400 mb-2">Email Address</label>
+                <input type="email" name="email" required class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white outline-none focus:border-green-500">
+            </div>
+            
+            <div>
+                <label class="block text-sm text-gray-400 mb-2">Driving License No.</label>
+                <input type="text" name="license" required placeholder="DL-XXXXXXXXXX" class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white outline-none focus:border-green-500">
+            </div>
+            <div>
+                <label class="block text-sm text-gray-400 mb-2">Experience (Years)</label>
+                <input type="number" name="experience" required class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white outline-none focus:border-green-500">
+            </div>
+
+            <div class="col-span-2">
+                <label class="block text-sm text-gray-400 mb-2">What can you ride/drive?</label>
+                <div class="flex space-x-4">
+                    <label class="flex items-center space-x-2"><input type="checkbox" name="v_types" value="Car"> <span>Car</span></label>
+                    <label class="flex items-center space-x-2"><input type="checkbox" name="v_types" value="Bike"> <span>Bike</span></label>
+                    <label class="flex items-center space-x-2"><input type="checkbox" name="v_types" value="Heavy Vehicle"> <span>Heavy</span></label>
+                </div>
+            </div>
+
+            <div class="col-span-2">
+                <label class="block text-sm text-gray-400 mb-2">Special Skills</label>
+                <div class="flex flex-wrap gap-4">
+                    <label class="flex items-center space-x-2"><input type="checkbox" name="skills" value="Manual"> <span>Manual</span></label>
+                    <label class="flex items-center space-x-2"><input type="checkbox" name="skills" value="Automatic"> <span>Automatic</span></label>
+                    <label class="flex items-center space-x-2"><input type="checkbox" name="skills" value="Luxury"> <span>Luxury Cars</span></label>
+                </div>
+            </div>
+
+            <div class="col-span-2">
+                <label class="block text-sm text-gray-400 mb-2">Password</label>
+                <input type="password" name="password" required class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white outline-none focus:border-green-500">
+            </div>
+
+            <button type="submit" class="col-span-2 bg-green-600 hover:bg-green-700 p-4 rounded-xl font-bold text-white transition mt-4 shadow-lg shadow-green-900/20">
+                Submit Partner Application
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

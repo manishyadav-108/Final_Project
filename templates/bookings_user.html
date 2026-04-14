@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-4xl mx-auto py-10">
+    <h2 class="text-3xl font-bold text-white mb-8">My Ride History</h2>
+
+    {% if not bookings %}
+    <div class="bg-gray-800 p-10 rounded-2xl text-center border border-gray-700">
+        <p class="text-gray-400 mb-4">You haven't booked any rides yet.</p>
+        <a href="/" class="text-blue-400 hover:underline">Start your first journey →</a>
+    </div>
+    {% else %}
+    <div class="space-y-6">
+        {% for b in bookings %}
+        <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <div class="flex items-center space-x-3 mb-2">
+                    <span class="px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider 
+                        {% if b[3] == 'Self_Drive' %} bg-blue-900 text-blue-300
+                        {% elif b[3] == 'Chauffeur_Driven' %} bg-green-900 text-green-300
+                        {% else %} bg-purple-900 text-purple-300 {% endif %}">
+                        {{ b[3].replace('_', ' ') }}
+                    </span>
+                    <span class="text-gray-500 text-sm">{{ b[7].strftime('%d %b, %Y') }}</span>
+                </div>
+                <h3 class="text-xl font-bold text-white">
+                    {% if b[3] == 'Driver_Only' %} Chauffeur: {{ b[2] }} {% else %} {{ b[1] }} {% endif %}
+                    
+                </h3>
+                <p class="text-gray-400 text-sm">Booking ID: #{{ b[0] }}</p>
+                <a href="/report/{{ b[0] }}" class="text-xs text-red-400 hover:underline mt-2 inline-block">Report an Issue</a>
+            </div>
+
+            <div class="bg-gray-900 p-4 rounded-xl border border-gray-700 text-center min-w-[120px]">
+                <p class="text-xs text-gray-500 uppercase">Ride OTP</p>
+                <p class="text-2xl font-mono font-bold text-green-400">{{ b[6] }}</p>
+            </div>
+
+            <div class="text-right">
+                <p class="text-2xl font-black text-white">₹{{ b[4] }}</p>
+                <p class="text-xs text-green-500 font-bold uppercase">{{ b[5] }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

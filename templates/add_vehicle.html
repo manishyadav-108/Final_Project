@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-2xl mx-auto py-10">
+    <div class="flex items-center space-x-4 mb-8">
+        <a href="/admin" class="text-gray-400 hover:text-white">← Back to Dashboard</a>
+    </div>
+
+    <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 shadow-xl">
+        <h2 class="text-3xl font-bold text-white mb-6">Add New Vehicle</h2>
+        
+        <form action="/admin/add-vehicle" method="POST" class="grid grid-cols-2 gap-6">
+            <div class="col-span-2">
+                <label class="block text-sm text-gray-400 mb-2">Vehicle Name (e.g., Toyota Fortuner)</label>
+                <input type="text" name="name" required class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 focus:border-blue-500 outline-none">
+            </div>
+
+            <div>
+                <label class="block text-sm text-gray-400 mb-2">Category</label>
+                <select name="type" class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 outline-none">
+                    <option value="Car">Car</option>
+                    <option value="Bike">Bike</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm text-gray-400 mb-2">Transmission</label>
+                <select name="transmission" class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 outline-none">
+                    <option value="Manual">Manual</option>
+                    <option value="Automatic">Automatic</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm text-gray-400 mb-2">Price Per Day (₹)</label>
+                <input type="number" name="price" required class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 outline-none">
+            </div>
+
+            <div>
+                <label class="block text-sm text-gray-400 mb-2">Image Filename</label>
+                <input type="text" name="image_name" placeholder="car3.jpg" required class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 outline-none">
+                <p class="text-xs text-gray-500 mt-1">Make sure to put this file in static/images/</p>
+            </div>
+
+            <button type="submit" class="col-span-2 bg-blue-600 hover:bg-blue-700 p-4 rounded-xl font-bold text-white transition mt-4">
+                Save to Database
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
