@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-md mx-auto py-20">
+    <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 shadow-xl">
+        <h2 class="text-2xl font-bold text-white mb-6">Edit Price: {{ vehicle[0] }}</h2>
+        <form method="POST">
+            <label class="block text-sm text-gray-400 mb-2">New Price per Day (₹)</label>
+            <input type="number" name="price" value="{{ vehicle[1] }}" 
+                   class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-white outline-none focus:border-blue-500 mb-6">
+            
+            <div class="flex space-x-4">
+                <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-700 p-3 rounded-lg font-bold text-white transition">Update Price</button>
+                <a href="/admin" class="flex-1 bg-gray-700 hover:bg-gray-600 p-3 rounded-lg font-bold text-white text-center transition">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

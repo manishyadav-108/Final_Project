@@ -144,31 +144,33 @@ def confirm_booking():
 
 @app.route('/admin')
 def admin_dashboard():
-    # ... security check ...
+    if not session.get('is_admin'):
+        return redirect(url_for('login'))
+    
     conn = get_db_connection()
     cur = conn.cursor()
     
+    # 1. Fetch all bookings
     cur.execute("""
-        SELECT b.booking_id,    -- Index 0
-        u.full_name,     -- Index 1
-        v.name,          -- Index 2
-        d.name,          -- Index 3
-        b.booking_type,  -- Index 4
-        b.total_price,   -- Index 5
-        b.status,        -- Index 6
-        b.booking_otp    -- Index 7
-    FROM Bookings b
+        SELECT b.booking_id, u.full_name, COALESCE(v.name, 'N/A'), COALESCE(d.name, 'N/A'), 
+               b.booking_type, b.total_price, b.status, b.booking_otp
+        FROM Bookings b
         JOIN Users u ON b.user_id = u.user_id
         LEFT JOIN Vehicles v ON b.vehicle_id = v.vehicle_id
         LEFT JOIN Drivers d ON b.driver_id = d.driver_id
         ORDER BY b.booking_id DESC
     """)
-    
     all_bookings = cur.fetchall()
+
+    # 2. NEW: Fetch all vehicles so we can edit prices
+    cur.execute("SELECT vehicle_id, name, price_per_day, type FROM Vehicles ORDER BY name")
+    all_vehicles = cur.fetchall()
     
     cur.close()
     conn.close()
-    return render_template('admin.html', bookings=all_bookings)
+    
+    # 3. Send BOTH bookings and vehicles to the template
+    return render_template('admin.html', bookings=all_bookings, vehicles=all_vehicles)
 
 @app.route('/admin/add-vehicle', methods=['GET', 'POST'])
 def add_vehicle():
@@ -339,6 +341,29 @@ def report_issue(booking_id):
         return redirect(url_for('my_bookings'))
         
     return render_template('report.html', booking_id=booking_id)
+
+@app.route('/admin/edit-vehicle/<int:v_id>', methods=['GET', 'POST'])
+def edit_vehicle(v_id):
+    if not session.get('is_admin'): return redirect(url_for('login'))
+    
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    if request.method == 'POST':
+        new_price = request.form['price']
+        cur.execute("UPDATE Vehicles SET price_per_day = %s WHERE vehicle_id = %s", (new_price, v_id))
+        conn.commit()
+        cur.close()
+        conn.close()
+        flash("Price updated successfully!", "success")
+        return redirect(url_for('admin_dashboard'))
+
+    # Fetch current details to show in the form
+    cur.execute("SELECT name, price_per_day FROM Vehicles WHERE vehicle_id = %s", (v_id,))
+    vehicle = cur.fetchone()
+    cur.close()
+    conn.close()
+    return render_template('edit_vehicle.html', vehicle=vehicle, v_id=v_id)
 
 if __name__ == '__main__':
     app.run(debug=True)

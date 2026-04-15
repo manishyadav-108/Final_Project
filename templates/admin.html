@@ -9,9 +9,35 @@
             </a>
             <span class="bg-blue-900/50 text-blue-300 px-4 py-2 rounded-lg border border-blue-800">Total Bookings: {{ bookings|length }}</span>
         </div>
+        
     </div>
-
-
+    <b>
+    <h3 class="text-2xl font-bold text-white mt-12 mb-6">Manage Fleet Prices</h3>
+    <div class="bg-gray-800 rounded-2xl border border-gray-700 overflow-hidden">
+        <table class="w-full text-left">
+            <thead class="bg-gray-900 text-gray-400 text-xs uppercase font-bold">
+                <tr>
+                    <th class="p-4">Vehicle Name</th>
+                    <th class="p-4">Category</th>
+                    <th class="p-4">Current Price</th>
+                    <th class="p-4">Action</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-700">
+                {% for v in vehicles %} <tr class="hover:bg-gray-750 transition">
+                    <td class="p-4 text-white font-medium">{{ v[1] }}</td>
+                    <td class="p-4 text-gray-400 text-sm">{{ v[3] }}</td>
+                    <td class="p-4 text-green-400 font-bold">₹{{ v[2] }}</td>
+                    <td class="p-4">
+                        <a href="/admin/edit-vehicle/{{ v[0] }}" class="text-blue-400 hover:underline text-sm font-bold">
+                            Edit Price
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     <div class="bg-gray-800 rounded-2xl border border-gray-700 overflow-hidden">
         <table class="w-full text-left border-collapse">
             <thead class="bg-gray-900 text-gray-400 uppercase text-xs tracking-wider font-bold">
